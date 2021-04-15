@@ -10,6 +10,7 @@ const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+const ObjectId = require("mongodb").ObjectID;
 
 app.use(cors());
 app.use(express.json());
@@ -46,6 +47,11 @@ client.connect((err) => {
     adminCollection
       .insertOne(admin)
       .then((response) => res.send(response.insertedCount > 0));
+  });
+
+  app.delete("/deleteService", (req, res) => {
+    const id = req.query.id;
+    console.log(id);
   });
 });
 
