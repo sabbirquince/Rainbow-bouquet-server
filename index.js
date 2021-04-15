@@ -43,7 +43,9 @@ client.connect((err) => {
 
   app.post("/makeAdmin", (req, res) => {
     const admin = req.body;
-    adminCollection.insertOne(admin).then((response) => console.log(response));
+    adminCollection
+      .insertOne(admin)
+      .then((response) => res.send(response.insertedCount > 0));
   });
 });
 
