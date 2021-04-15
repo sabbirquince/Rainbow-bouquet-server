@@ -29,7 +29,6 @@ client.connect((err) => {
 
   app.post("/addService", (req, res) => {
     const serviceInfo = req.body;
-    console.log(serviceInfo);
 
     servicesCollection
       .insertOne(serviceInfo)
@@ -51,7 +50,9 @@ client.connect((err) => {
 
   app.delete("/deleteService", (req, res) => {
     const id = req.query.id;
-    console.log(id);
+    servicesCollection
+      .deleteOne({ _id: ObjectId(id) })
+      .then((result) => res.send(result.deletedCount > 0));
   });
 });
 
