@@ -23,7 +23,7 @@ client.connect((err) => {
   const servicesCollection = client
     .db("rainbow-bouquet")
     .collection("services");
-  const orderCollection = client.db("rainbow-bouquet").collection("services");
+  const orderCollection = client.db("rainbow-bouquet").collection("orders");
   const reviewsCollection = client.db("rainbow-bouquet").collection("reviews");
   const adminCollection = client.db("rainbow-bouquet").collection("admins");
 
@@ -53,6 +53,24 @@ client.connect((err) => {
     servicesCollection
       .deleteOne({ _id: ObjectId(id) })
       .then((result) => res.send(result.deletedCount > 0));
+  });
+
+  app.get("/adminCheck", (req, res) => {
+    const email = req.query.email;
+
+    adminCollection
+      .find({ email })
+      .count()
+      .then((result) => res.send(result > 0));
+  });
+
+  app.post("/bookService", (req, res) => {
+    const data = req.body;
+    console.log(data);
+
+    orderCollection
+      .insertOne(data)
+      .then((result) => res.send(result.insertedCount > 0));
   });
 });
 
