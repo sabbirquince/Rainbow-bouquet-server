@@ -85,6 +85,12 @@ client.connect((err) => {
       res.send(docs);
     });
   });
+
+  app.patch("/setStatus", (req, res) => {
+    const { _id, status } = req.body;
+    console.log(_id, status);
+    // orderCollection.updateOne({});
+  });
 });
 
 app.listen(port);
