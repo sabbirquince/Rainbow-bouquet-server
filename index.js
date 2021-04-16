@@ -88,8 +88,10 @@ client.connect((err) => {
 
   app.patch("/setStatus", (req, res) => {
     const { _id, status } = req.body;
-    console.log(_id, status);
-    // orderCollection.updateOne({});
+
+    orderCollection
+      .updateOne({ _id: ObjectId(_id) }, { $set: { status } })
+      .then((result) => res.send(result.modifiedCount > 0));
   });
 });
 
