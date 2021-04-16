@@ -79,6 +79,12 @@ client.connect((err) => {
       res.send(docs);
     });
   });
+
+  app.get("/orderLists", (req, res) => {
+    orderCollection.find({}).toArray((err, docs) => {
+      res.send(docs);
+    });
+  });
 });
 
 app.listen(port);
