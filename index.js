@@ -72,6 +72,13 @@ client.connect((err) => {
       .insertOne(data)
       .then((result) => res.send(result.insertedCount > 0));
   });
+
+  app.get("/getService", (req, res) => {
+    const id = req.query.id;
+    servicesCollection.find({ _id: ObjectId(id) }).toArray((err, docs) => {
+      res.send(docs);
+    });
+  });
 });
 
 app.listen(port);
