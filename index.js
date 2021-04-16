@@ -96,9 +96,23 @@ client.connect((err) => {
 
   app.get("/myOrders", (req, res) => {
     const email = req.query.email;
-    console.log(email);
 
     orderCollection.find({ email }).toArray((err, docs) => {
+      res.send(docs);
+    });
+  });
+
+  app.post("/addReview", (req, res) => {
+    const review = req.body;
+
+    console.log(review);
+    reviewsCollection
+      .insertOne(review)
+      .then((result) => res.send(result.insertedCount > 0));
+  });
+
+  app.get("/reviews", (req, res) => {
+    reviewsCollection.find({}).toArray((err, docs) => {
       res.send(docs);
     });
   });
