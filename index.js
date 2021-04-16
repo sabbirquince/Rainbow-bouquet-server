@@ -93,6 +93,15 @@ client.connect((err) => {
       .updateOne({ _id: ObjectId(_id) }, { $set: { status } })
       .then((result) => res.send(result.modifiedCount > 0));
   });
+
+  app.get("/myOrders", (req, res) => {
+    const email = req.query.email;
+    console.log(email);
+
+    orderCollection.find({ email }).toArray((err, docs) => {
+      res.send(docs);
+    });
+  });
 });
 
 app.listen(port);
